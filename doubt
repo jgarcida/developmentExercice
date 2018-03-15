@@ -1,0 +1,40 @@
+
+Thymeleaf
+Html
+		<tr th:id="'idShareholderRow' + ${shareholder.id}" th:each="shareholder : ${shareholderList.shareHolders}">
+      <td th:text="${shareholder.rfc}"></td>
+			<td th:text="${shareholder.name}"></td>
+			<td th:text="${shareholder.address}"></td>
+			<td th:text="${shareholder.participation}"></td>
+			<td class="centrado"><a href="##" th:onclick="'markDeletedModel(\'#idShareholderRow' + ${shareholder.id} + '\')'"><span class="glyphicon glyphicon-trash"></span></a></td>
+			<td class="centrado"><a href="##" th:onclick="'unmarkDeletedModel(\'#idShareholderRow' + ${shareholder.id} + '\')'"><span class="glyphicon glyphicon-arrow-left"></span></a></td>
+		</tr>
+    
+   Funcion Ajax
+   		 console.log(' ::Accionista ::');	 
+							 var shareholder = /*[[${session.shareholderList.shareHolders}]]*/ ;
+							 console.log(' ::Lista Accionistas ::' +JSON.stringify({shareholder}));
+							
+							 $.ajax({
+								 type: 'POST',
+								 url: "/ajax/saveShareholder/",
+								 data: JSON.stringify({shareholder}),
+								 datatype: 'json',
+								 success: function( data ) {
+									 var obj = jQuery.parseJSON( data );
+									 console.log(' ::success::' +obj);
+									 }
+						});
+            
+     Controller
+    ¿Cómo puedo recuperar la lista que entoy enviando de la vista? 
+     
+ @RequestMapping(value = "/ajax/saveShareholder/" , method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView saveShareholder(ModelAndView mv,  BindingResult bindingResult,  
+			RedirectAttributes redirectAttributes, HttpServletRequest request, @SessionAttribute("claimObject") Claim claimObject
+			){
+		String fragmentRoute = NavConstants.FRAGMENTS_PATH.concat("empty :: fragmentEmpty");
+		mv.setViewName(fragmentRoute);
+		return mv;
+	}
