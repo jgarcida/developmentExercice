@@ -26,11 +26,10 @@ indices  = lista.chars.each_with_index
 	puts "BAJANDO : #{bajar}" 
 	
 	piso = subir - bajar
-	puts "SAnta esta en el piso  : #{piso}"
+	puts "Santa esta en el piso  : #{piso}"
 	
 	subir = piso
 	puts "Actualizando la variable subir  : #{subir}"
 
 	bajar = 0;
-
 }
